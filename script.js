@@ -2,13 +2,17 @@
 var timeEl = document.getElementById("timer");
 //sets how much time the timer starts off with
 var timeLeft = 75;
+//Score starts out at 0
 var score = 0;
+//this variable helps ensure that if the questions are all answered before the timer ends & the All done screen shows, it won't duplicate once the timer does reach 0
 var allDone = true; 
+//These variables are traversing the DOM
 var intro = document.getElementById("intro");
 var rules = document.getElementById("instructions");
 var start = document.getElementById("startBtn");
 var begin = document.getElementById("beginning");
 var body = document.body;
+//this is the variable that refers to user input for their initials
 var player = "";
 
 var q1 = {
@@ -80,6 +84,7 @@ function startQuiz() {
     a3.textContent = q1["correct"];
     a4.textContent = q1["a4"];
 
+    //This keeps track if the 1st question is answered correctly & removes the question/answer choices
     function correctAnswer() {
         score ++;
         body.removeChild(q);
@@ -90,7 +95,7 @@ function startQuiz() {
         question2();
         console.log(score)
     };
-    
+    //if the question is answered wrong, then this deducts 5 seconds from the timer and removes the question/answer choices
     function wrongAnswer() {
         timeLeft = timeLeft - 5;
         body.removeChild(q);
@@ -129,7 +134,7 @@ function startQuiz() {
         a2.textContent = q2["a2"];
         a3.textContent = q2["a3"];
         a4.textContent = q2["a4"];
-
+    //This keeps track if the 2nd question is answered correctly & removes the question/answer choices
     function correctAnswer() {
         score ++;
         body.removeChild(q);
@@ -140,7 +145,7 @@ function startQuiz() {
         question3();
         console.log(score)
     };
-    
+    //if the question is answered wrong, then this deducts 5 seconds from the timer and removes the question/answer choices
     function wrongAnswer() {
         timeLeft = timeLeft - 5;
         body.removeChild(q);
@@ -180,7 +185,8 @@ function startQuiz() {
         a2.textContent = q3["a2"];
         a3.textContent = q3["a3"];
         a4.textContent = q3["correct"];
-      
+
+    //This keeps track if the 3rd question is answered correctly & removes the question/answer choices
     function correctAnswer() {
         score ++;
         body.removeChild(q);
@@ -192,6 +198,7 @@ function startQuiz() {
         console.log(score)
     };
 
+    //if the question is answered wrong, then this deducts 5 seconds from the timer and removes the question/answer choices
     function wrongAnswer() {
         timeLeft = timeLeft - 5;
         body.removeChild(q);
@@ -205,8 +212,11 @@ function startQuiz() {
     }
 
     function endQuiz() {
+        //this stops the timer at 0
         timeLeft = 0;   
+        //this stops endQuiz from reinitiating when the timer gets to 0
         allDone = false; 
+        //this creates a new header that reads "ALL DONE!"
         var header = document.createElement("h3");
         body.appendChild(header);
         header.textContent = "All done!";
@@ -234,17 +244,31 @@ function startQuiz() {
             localStorage.setItem("score", score);
             console.log(player);
         
-            //remove input
-
-            //remove submit button
-
-            //change h3 text
+            //this code clears out scoreboard & user initials input
+            header.textContent = "High Scores"
+            body.removeChild(endScore);
+            body.removeChild(initials);
+            body.removeChild(endBtn);
             
-            //create, append table and rows displaying local storage?
+            //displaying players initials and score
+            var newRow = document.createElement("p");
+            body.appendChild(newRow);
+            newRow.textContent = `${player} ....... ${score}`;
+ 
+            var startOverBtn = document.createElement("button");
+            body.appendChild(startOverBtn);
+            startOverBtn.textContent = "Start Over"
+            startOverBtn.addEventListener("click", restartQuiz);
 
-            //create, append clear scores button
-
-            //create, append start over or go back button
+            function restartQuiz() {
+                body.removeChild(header);
+                body.removeChild(newRow);
+                body.removeChild(startOverBtn);
+                startQuiz();
+                timeLeft = 75;
+                score = 0;
+                setTimer();
+            };
         }
     }
 
