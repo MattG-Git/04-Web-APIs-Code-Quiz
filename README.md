@@ -18,4 +18,4 @@ THEN I can save my initials and my score
 
 Please see [live page here](https://mattg-git.github.io/04-Web-APIs-Code-Quiz/) and screenshot of project below. 
 
-![Coding Quiz](screencapture-mattg-git-github-io-04-Web-APIs-Code-Quiz-2022-07-19-20_27_39))
+![Coding Quiz](screencapture-mattg-git-github-io-04-Web-APIs-Code-Quiz-2022-07-19-20_27_39)
